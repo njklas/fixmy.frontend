@@ -62,15 +62,34 @@ const Subtitle = styled.div`
   padding: 0 0.5em;
 `;
 
+/**
+ * Return a srcSet attribute given an image file
+ *
+ * Assumes a naming scheme for the scaled versions of [base_path]@2x.[extension]
+ *
+ * @example
+ * getSrcSet('picture.jpeg');
+ * // => `picture.jpeg 1x, picture@2x.jpeg 2x, picture@3x.jpeg 3x`
+ *
+ * @param src image file path including extension
+ */
+const getSrcSet = (src: string) => {
+  const base = src.match(/(.+)\.(.+)/)[1];
+  const ext = src.match(/(.+)\.(.+)/)[2];
+  return `${src} 1x, ${base}@2x.${ext} 2x, ${base}@3x.${ext} 3x`;
+};
+
 interface InnerImageProps extends ImageProps {
   feelsafeSize?: FeelsafeSize;
   feelsafeIcon?: FeelsafeIcon;
   children?: React.ReactNode;
+  hasSrcSet?: boolean;
 }
 
 const InnerImg = ({
   source,
   alt,
+  hasSrcSet = false,
   role = null,
   feelsafe = null,
   subtitle = null,
@@ -79,7 +98,12 @@ const InnerImg = ({
   children = null
 }: InnerImageProps) => (
   <>
-    <Img src={source} alt={alt} role={role} />
+    <Img
+      src={source}
+      srcSet={!hasSrcSet ? null : getSrcSet(source)}
+      alt={alt}
+      role={role}
+    />
     {feelsafe && (
       <FeelSafe value={feelsafe} size={feelsafeSize} icon={feelsafeIcon} />
     )}
@@ -122,11 +146,13 @@ interface ImageProps {
   feelsafe?: number;
   feelsafeIcon?: FeelsafeIcon;
   subtitle?: string;
+  hasSrcSet?: boolean;
 }
 
 export const Image = ({
   source,
   alt,
+  hasSrcSet = false,
   role = null,
   feelsafe = null,
   subtitle = null
@@ -134,6 +160,7 @@ export const Image = ({
   <ImageWrapperSimple>
     <InnerImg
       source={source}
+      hasSrcSet={hasSrcSet}
       alt={alt}
       role={role}
       feelsafe={feelsafe || null}
@@ -145,6 +172,7 @@ export const Image = ({
 export const ImageFull = ({
   source,
   alt,
+  hasSrcSet = false,
   role = null,
   feelsafe = null,
   subtitle = null
@@ -152,6 +180,7 @@ export const ImageFull = ({
   <ImageWrapperFull>
     <InnerImg
       source={source}
+      hasSrcSet={hasSrcSet}
       alt={alt}
       role={role}
       feelsafe={feelsafe || null}

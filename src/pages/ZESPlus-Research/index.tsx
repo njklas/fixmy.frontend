@@ -86,7 +86,7 @@ const Research = () => (
       Radnetzes, aber auch für die Einbeziehung der lokalen Initiativen sowie
       des direkten Umfelds, in Form der Nachbargemeinden und des BER.
     </Paragraph>
-    <ImageFull source={Image1} alt="" role="presentation" />
+    <ImageFull source={Image1} hasSrcSet alt="" role="presentation" />
     <Paragraph>
       Finanziert wird diese Kooperation durch die{' '}
       <Link href="https://www.fona.de/de/massnahmen/foerdermassnahmen/mobilitaet-in-der-stadt.php">
@@ -229,7 +229,7 @@ const Research = () => (
         Feedback an das Projektteam
       </AnchorButton>
     </Paragraph>
-    <ImageFull source={Image2} alt="" role="presentation" />
+    <ImageFull source={Image2} hasSrcSet alt="" role="presentation" />
     <Logos />
   </Wrapper>
 );
